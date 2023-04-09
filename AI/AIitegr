@@ -1,0 +1,33 @@
+# Import required libraries
+import hashlib
+import json
+import requests
+
+# Define the data to be hashed and added to the blockchain
+data = {
+    "transaction": {
+        "sender": "Alice",
+        "recipient": "Bob",
+        "amount": 10
+    },
+    "model": {
+        "name": "neural network",
+        "architecture": "CNN",
+        "accuracy": 0.95
+    }
+}
+
+# Hash the data using SHA-256 algorithm
+block_data = json.dumps(data, sort_keys=True).encode()
+block_hash = hashlib.sha256(block_data).hexdigest()
+
+# Define the blockchain endpoint and POST the new block
+blockchain_url = "https://myblockchain.com/api/blocks"
+block = {
+    "data": data,
+    "hash": block_hash
+}
+response = requests.post(blockchain_url, json=block)
+
+# Print the response
+print(response.text)
